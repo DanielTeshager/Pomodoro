@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ <link rel="stylesheet" href="./css/style.css"> 
+  <title>My Pomodoro app</title>
+</head>
+
+<body>
+<main>
+  <div class="card container">
+    <div class="card-header">
+      <h1>pomodoro</h1>
+    </div>
+<!--  navigation -->
+    <div class="card-nav">
+      <div class="card-nav-item active">
+        <a href="#">
+          pomodoro
+        </a>
+      </div>
+      <div class="card-nav-item">
+        <a href="#">
+          short break
+        </a>
+      </div>
+      <div class="card-nav-item">
+        <a href="#">
+          long break
+        </a>
+      </div>
+    </div>
+    <!-- timer with radial progress using SVG  -->
+  <div class="card-timer">
+    <div class="card-timer-progress">
+      <svg class="radial-progress" viewBox="0 0 100 100">
+        <circle class="radial-progress-track" cx="50" cy="50" r="40" fill="none" stroke-width="5" stroke="#eeeeee"></circle>
+
+        <!-- <circle class="radial-progress-bar" data-percentage="0" cx="50" cy="50" r="30" fill="none" stroke-width="10" stroke-linecap="round" style="stroke-dasharray: 0, 20000; stroke-dashoffset: 0;"></circle> -->
+        <circle class="radial-progress-bar1" data-percentage="0" cx="50" cy="50" r="35" fill="#161932" stroke-width="10" stroke-linecap="round" style="stroke-dasharray: 0, 20000; stroke-dashoffset: 0;"></circle>
+        <circle class="radial-progress-bar2" data-percentage="0" cx="50" cy="50" r="30" fill="none" stroke-width="5" stroke-linecap="round" style="stroke-dasharray: 188.5, 20000; stroke-dashoffset: 0;"></circle>
+        <circle class="radial-progress-bar3" data-percentage="0" cx="50" cy="50" r="30" fill="none" stroke-width="5" stroke-linecap="round" style="stroke-dasharray: 188.5, 20000; stroke-dashoffset: 0;"></circle>
+       <defs>
+        <linearGradient id="fill-gradient">
+          <stop offset="5%" stop-color="#2E325A" />
+          <stop offset="95%" stop-color="#0E112A" />
+        </linearGradient>
+        <linearGradient id="stroke-gradinet">
+          <stop offset="95%" stop-color="#F60" />
+          <stop offset="5%" stop-color="#F66" />
+        </linearGradient>
+      </defs>
+      </svg>
+      <defs>
+    
+    </div>
+    <!-- settings button -->
+    <div class="card-settings">
+      <a href="">
+        <img src="./assets/icon-settings.svg" alt="settings icon">
+      </a>
+    </div>
+  </div>
+</main>
+<script src="./js/app.js"></script>
+</body>
+</html>

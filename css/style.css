@@ -1,0 +1,158 @@
+/* 
+Define color variables
+*/
+
+:root{
+    --darkblue: #0d47a1;
+    --lightblue: #42a5f5;
+    --red: #e53935;
+    --title-white: #D7E0FF;
+    --bg-color: #1E213F;
+    --highlight-pink: #F87070;
+    --bg-color-dark: #161932;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap');
+
+/* 
+The great reset :)
+*/
+*,*::after,*::before {
+  box-sizing: border-box;
+  list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+a{
+    color: var(--bg-color-dark);
+}
+
+/* 
+Style the main container
+*/
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--bg-color);
+}
+
+
+/*
+Style the card
+*/
+.card{
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    /* box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5); */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/*
+style the title
+*/
+
+.card-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--red);
+    margin: 1rem 0 2rem 0;
+}
+.card-header h1{
+    font-family: 'Syncopate', sans-serif;
+    color: var(--title-white);
+    font-size: 2rem;
+}
+
+/*
+Style the navigation
+*/
+
+.card-nav{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: var(--bg-color-dark);
+    border-radius: 2rem;
+    padding: .5rem;
+    align-items: center;
+    width: 80%;
+}
+
+.card-nav-item.active{
+    background: var(--highlight-pink);
+}
+.card-nav-item.active a{
+    color: var(--bg-color-dark);
+}
+.card-nav-item{
+    width: 100%;
+    height: 100%;
+    border-radius: 3rem;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-nav-item a{
+    color: var(--title-white);
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/*
+Style the settings
+*/
+
+.card-settings  {
+    display: flex;
+    justify-content: center;
+}
+
+.card-settings a img{
+    display: inline-block;
+    width: fit-content;
+}
+
+
+/*
+style the svg circles
+*/
+.radial-progress-track{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--bg-color-dark);
+    position: relative;
+    fill: url('#fill-gradient');
+    stroke-width: 0;
+}
+
+.radial-progress-bar1{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--bg-color-dark);
+    position: relative;
+    fill: #161932;
+    stroke: var(--bg-color-dark);
+}
+.radial-progress-bar2{
+    stroke: var(--highlight-pink);
+}
