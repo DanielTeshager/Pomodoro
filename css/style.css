@@ -186,3 +186,7 @@ style the svg circles
 .radial-progress-bar2{
     stroke: var(--highlight-pink);
 }
+
+.radial-progress-bar3{
+    stroke: var(--bg-color);
+}

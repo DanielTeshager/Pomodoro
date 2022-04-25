@@ -3,20 +3,20 @@ const timer_progress = document.querySelector('.radial-progress-bar2');
 const timer_container = document.querySelector('.card-timer-time');
 const timer_status = document.querySelector('.card-timer-status');
 
+//initialize timer object
 const timerObj = {
     work: 25,
     break: 5,
     time: 1,
-    currentPosition: 0,
-    is_work: true,
     is_paused: false,
     is_running: true,
     is_stopped: true,
-    is_reset: false,
     paused_time: 0,
     currentTime: 0,
 };
-// pause timer when clicked on timer_container
+
+// pause || resume timer when clicked on timer_container
+// this function needs to be refactored
 timer_container.addEventListener('click', () => {
     if (timerObj.is_running) {
         timerObj.is_paused = !timerObj.is_paused;
@@ -25,14 +25,8 @@ timer_container.addEventListener('click', () => {
             timerObj.is_stopped = false;
             timerObj.is_reset = false;
             timer_container.classList.add('card-timer-time-paused');
-        } else {
-            timerObj.is_running = true;
-            timerObj.is_stopped = false;
-            timerObj.is_reset = false;
-            console.log('timer resumed', timerObj.paused_time);
-            timerAction((timerObj.paused_time/60));
-            timer_container.classList.remove('card-timer-time-paused');
-        }
+            timerObj.paused_time = timerObj.currentTime;
+        } 
     }
     else{
         timerObj.is_paused = false;
@@ -40,17 +34,19 @@ timer_container.addEventListener('click', () => {
         timerObj.is_stopped = false;
         timerObj.is_reset = false;
         timer_container.classList.remove('card-timer-time-paused');
-        timerAction(timerObj.paused_time);
+        timerAction((timerObj.paused_time/60));
     }
 });
-// on document load action
+// kick start timer on document load action
 document.addEventListener('DOMContentLoaded', () => {
     timerAction(timerObj.time);
 });
 
 
 // on timer start action
-function timerAction(currentTime, is_reset, is_paused) {
+//this function takes in the time in minutes 
+function timerAction(currentTime) {
+
     let total_seconds = currentTime * 60;
     console.log(total_seconds);
 
@@ -62,23 +58,35 @@ function timerAction(currentTime, is_reset, is_paused) {
         if (seconds < 10 && seconds >= 0) {
             seconds = '0' + seconds;
         }
-        if(total_seconds === 0 || timerObj.is_paused) {
 
-            timer_status.innerHTML = 'PAUSED'; 
-            console.log('timer stopped', timerObj.paused_time);
-            timerObj.is_running = false;
-            timerObj.is_stopped = true;
-            timerObj.is_reset = false;
-            if (total_seconds === 0) {
-                timerObj.is_paused = false;
-                timerObj.is_running = false;
-                timerObj.is_stopped = true;
-                timerObj.is_reset = false;
-                clearInterval(liveTimer);
-            }
+        timer_status.innerHTML = timerObj.is_paused ? 'PAUSED' : 'RUNNING'; // update timer status; 
+        //pause if object timer is paused
+        if (timerObj.is_paused) {
             clearInterval(liveTimer);
+            timer_value.innerHTML = `${minutes}:${seconds}`;
+            timer_progress.style.strokeDashoffset = `${timerObj.currentPosition}`;
+            return;
         }
+        // if(total_seconds === 0 || timerObj.is_paused) {
+
+        //     console.log('timer paused', timerObj.paused_time);
+        //     timerObj.is_running = false;
+        //     timerObj.is_stopped = true;
+        //     timerObj.is_reset = false;
+        //     if (total_seconds === 0) {
+        //         timerObj.is_paused = false;
+        //         timerObj.is_running = false;
+        //         timerObj.is_stopped = true;
+        //         timerObj.is_reset = false;
+        //         clearInterval(liveTimer);
+        //     }
+        //     clearInterval(liveTimer);
+        // }
+        
+        //update timer value
         timer_value.textContent = `${minutes}:${seconds}`;
+
+        //update timer progress bar
         let radius = timer_progress.getAttribute('r');
         let circumference = 2 * Math.PI * radius;
         let progress = circumference * (total_seconds / (timerObj.time * 60));
@@ -87,7 +95,7 @@ function timerAction(currentTime, is_reset, is_paused) {
         //update current time
         timerObj.currentTime = total_seconds;
 
-    }, 1000,);
+    }, 1000);
 
     return liveTimer;
 }
