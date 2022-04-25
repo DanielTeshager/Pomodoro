@@ -2,6 +2,23 @@ const timer_value = document.querySelector('.card-timer-time-value');
 const timer_progress = document.querySelector('.radial-progress-bar2');
 const timer_container = document.querySelector('.card-timer-time');
 const timer_status = document.querySelector('.card-timer-status');
+const settings_card = document.querySelector('.settings-card');
+const settings_close_button = document.querySelector('.close-button');
+const open_settings_button = document.querySelector('.card-settings-button');
+
+//close the settings dialog box 
+settings_close_button.addEventListener('click', () => {
+    console.log('close settings');
+    settings_card.classList.add('hide');
+
+});
+
+//open settings dialog box
+open_settings_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    settings_card.classList.remove('hide');
+});
+
 
 //initialize timer object
 const timerObj = {
@@ -99,3 +116,51 @@ function timerAction(currentTime) {
 
     return liveTimer;
 }
+
+//define max and min values for timer
+const max_min_values = {
+    shortBreak: {
+        min: 1,
+        max: 60,
+    },
+    longBreak: {
+        min: 1,
+        max: 60,
+    },
+    pomodoro: {
+        min: 1,
+        max: 60,
+    },
+};
+
+
+//handle timer value change
+const timer_value_change = (e) => {
+    //target element tagname
+
+    let clickedElement = e.target.tagName;
+    let parent_element = clickedElement ==='SPAN' ? e.target : e.target.parentElement;
+    //data attribute of the parent element to determine which timer to update
+    let data_attribute = parent_element.parentElement.getAttribute('data-spinner-type');
+    let current_input_field = parent_element.parentElement.parentElement.children[1];
+    //get the value of parent elements sibling
+    let current_value =  parseInt(current_input_field.value);
+    //add or subtract value from current value
+    //if parent_element class is up then add value
+    if (parent_element.classList.contains('up') && current_value < max_min_values[data_attribute].max) {
+        current_value++;
+    }
+    //if parent_element class is down then subtract value
+    else if (parent_element.classList.contains('down') && current_value > max_min_values[data_attribute].min) {
+        current_value--;
+    }
+    //update the value of the parent element
+    current_input_field.value = current_value;
+}
+
+
+//handle all spinners value change
+const spinners = document.querySelectorAll('.spin');
+spinners.forEach(spinner => {
+    spinner.addEventListener('click', timer_value_change);
+});

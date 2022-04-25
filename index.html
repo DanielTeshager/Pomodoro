@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
  <link rel="stylesheet" href="./css/style.css"> 
   <title>My Pomodoro app</title>
 </head>
@@ -61,12 +61,117 @@
     
     </div>
     <!-- settings button -->
-    <div class="card-settings">
+    <div class="card-settings-button">
       <a href="">
         <img src="./assets/icon-settings.svg" alt="settings icon">
       </a>
     </div>
   </div>
+
+  <div class="settings-card hide">
+    <div class="settings-header">
+      <h2>Settings</h2>
+      <span class="close-button">
+        <img src="./assets/icon-close.svg" alt="close icon">
+      </span>
+    </div>
+    <hr>
+    <!-- settings items -->
+    <div class="settings-items">
+      <div class="settings-items-header">
+        <span>Time (minutes)</span>
+      </div>
+      <!-- time related settings -->
+      <div class="settings-items-content-time">
+        <div class="settings-items-content-item">
+          <span>pomodoro</span>
+          <div class="pomodoro-spinner spinner">
+            <div class="spin" data-spinner-type="pomodoro">
+              <span class="up">
+                <!-- unicode up angle-->
+                <i class="fas fa-angle-up"></i>
+              </span>
+              <span class="down">
+                <!-- unicode up angle-->
+                <i class="fas fa-angle-down"></i>
+              </span>
+            </div>
+            <input type="" value="25">
+          </div>
+        </div>
+        <div class="settings-items-content-item">
+          <span>short break</span>
+          <div class="shortbreak-spinner spinner">
+            <div class="spin" data-spinner-type="shortBreak">
+              <span class="up">
+                <!-- unicode up angle-->
+                <i class="fas fa-angle-up"></i>
+              </span>
+              <span class="down">
+                <!-- unicode up angle-->
+                <i class="fas fa-angle-down"></i>
+              </span>
+            </div>
+            <input type="text" value="5">
+          </div>
+        </div>
+        <div class="settings-items-content-item">
+          <span>long break</span>
+          <div class="longbreak-spinner spinner">
+            <div class="spin" data-spinner-type="longBreak">
+              <span class="up">
+                <!-- unicode up angle-->
+                <i class="fas fa-angle-up"></i>
+              </span>
+              <span class="down">
+                <!-- unicode up angle-->
+                <i class="fas fa-angle-down"></i>
+              </span>
+            </div>
+            <input type="text" value="15">
+          </div>
+        </div>
+      </div>
+      <!-- font related settings -->
+      <div class="settings-items-content-fonts">
+          <span>Font</span>
+          <ul class="font-settings">
+            <li class="active">
+              <span class="fontA">Aa</span>
+            </li>
+            <li>
+              <span class="fontB">Aa</span>
+            </li>
+            <li>
+              <span class="fontC">Aa</span>
+            </li>
+          </ul>
+
+      </div>  
+       <div class="settings-items-content-colors">
+          <span>Color</span>
+          <ul>
+            <li>
+              <span class="blue"></span>
+            </li>
+            <li>
+                <span class="red"></span>
+            </li>
+          <li>
+              <span class="yellow"></span>
+            </li>
+          </li>
+          </ul> 
+        </div>
+        <div class="apply-settings-button-container">
+          <button>Apply</button>
+        </div>
+      </div>
+
+    <!-- settings items -->
+  </div>
+
+
 </main>
 <script src="./js/app.js"></script>
 </body>

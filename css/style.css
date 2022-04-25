@@ -10,6 +10,14 @@ Define color variables
     --bg-color: #1E213F;
     --highlight-pink: #F87070;
     --bg-color-dark: #161932;
+    --regular-white: #fff;
+    --border-bottom-white: #e0e0e0;
+}
+
+
+hr{
+    border: 0.1px solid #979797;
+    opacity: .3;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap');
@@ -58,6 +66,7 @@ Style the card
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 .card-timer{
     width: 100%;
@@ -150,12 +159,12 @@ Style the navigation
 Style the settings
 */
 
-.card-settings  {
+.card-settings-button  {
     display: flex;
     justify-content: center;
 }
 
-.card-settings a img{
+.card-settings-button a img{
     display: inline-block;
     width: fit-content;
 }
@@ -189,4 +198,191 @@ style the svg circles
 
 .radial-progress-bar3{
     stroke: var(--bg-color);
+}
+
+
+/* 
+style settings
+*/
+.settings-card{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;;
+    left: 0px;
+    bottom: 20%;
+    background: var(--regular-white);
+    border-radius: 10px;
+    height: 50%;
+    font-family: 'Syncopate', sans-serif;
+}
+.settings-card .close-button{
+    cursor: pointer;
+}
+
+.settings-header{
+    display: flex;
+align-items: baseline;
+justify-content: space-between;
+padding: 2rem;
+}
+.settings-items{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    padding: 1rem 2rem;
+}
+.settings-items-header{
+    text-transform: uppercase;
+    /* char spacing */
+    letter-spacing: .2rem;
+    font-size: .8rem;
+    margin-bottom: 1rem;
+}
+.settings-items-content-time{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-bottom-white);
+    padding-bottom: 1rem;
+}
+.settings-items-content-item{
+    max-width: 25%;
+}
+.settings-items-content-item input{
+    width: 100%;
+    background: #EFF1FA;
+    padding: .5rem .5rem;
+    border: none;
+    border-radius: .3rem;
+}
+.settings-items-content-item span{
+    font-size: .6rem;
+    color: #1E213F;
+}
+.pomodoro-spinner, .shortbreak-spinner, .longbreak-spinner{
+    position: relative;
+    margin-top: .3rem ;
+}
+.pomodoro-spinner .spin, .shortbreak-spinner .spin, .longbreak-spinner .spin{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+    position: absolute;
+    flex-direction: column;
+    z-index: 1;
+    width: 2rem;
+    height: 2rem;
+    top: 0;
+    right: 0;   
+}
+
+.spin span{
+    font-size: .8rem;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    color: #1E213F;
+    opacity: .25;
+}
+
+.spin span:active{
+    color: var(--highlight-pink);
+    opacity: 1;
+}
+
+/*
+sytle the font settings
+*/
+
+.settings-items-content-fonts, 
+.settings-items-content-colors{
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-bottom-white);
+    padding-bottom: 1rem;
+}
+.settings-items-content-fonts>span, .settings-items-content-colors>span{
+    font-size: .8rem;
+    color: #1E213F;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+}
+.settings-items-content-fonts ul, .settings-items-content-colors ul{
+    display: flex;
+    gap: 1rem;
+}
+/* make small cirlces out of the li elements */
+.settings-items-content-fonts ul li,
+.settings-items-content-colors ul li
+{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: #EFF1FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: .5rem;
+    cursor: pointer;
+    border: 1px solid #EFF1FA;
+    box-shadow: inset 0 0 0 2px var(--regular-white);
+}
+
+.settings-items-content-fonts ul li.active{
+    background: var(--bg-color-dark);
+    
+}
+
+.settings-items-content-fonts ul li.active span{
+    color: var(--regular-white);
+}
+
+/*
+style the color settings
+*/
+
+.settings-items-content-colors{
+    border-bottom: none;
+}
+.settings-items-content-colors ul li:nth-child(1){
+    background: var(--highlight-pink);
+}
+.settings-items-content-colors ul li:nth-child(2){
+    background: var(--bg-color-dark);
+}
+.settings-items-content-colors ul li:nth-child(3){
+    background: var(--darkblue);
+}
+
+/*
+style apply settings button
+*/
+.apply-settings-button-container{
+    display: flex;
+    justify-content: center;
+    margin-top: -1rem;
+}
+.apply-settings-button-container button{
+    background: var(--highlight-pink);
+    color: var(--regular-white);
+    border: none;
+    padding: .6rem 1.5rem;
+    border-radius: 1rem;
+    font-size: .8rem;
+    letter-spacing: .2rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+/*  
+utils
+*/
+
+.hide{
+    display: none;
 }
