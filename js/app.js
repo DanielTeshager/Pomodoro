@@ -5,6 +5,10 @@ const timer_status = document.querySelector('.card-timer-status');
 const settings_card = document.querySelector('.settings-card');
 const settings_close_button = document.querySelector('.close-button');
 const open_settings_button = document.querySelector('.card-settings-button');
+const short_break_value = document.querySelector('.shortbreak-spinner input');
+const long_break_value = document.querySelector('.longbreak-spinner input');
+const pomodoro_value = document.querySelector('.pomodoro-spinner input');
+const settings_apply_button = document.querySelector('.apply-settings-button-container button');
 
 //close the settings dialog box 
 settings_close_button.addEventListener('click', () => {
@@ -20,18 +24,6 @@ open_settings_button.addEventListener('click', (e) => {
 });
 
 
-//initialize timer object
-const timerObj = {
-    work: 25,
-    break: 5,
-    time: 1,
-    is_paused: false,
-    is_running: true,
-    is_stopped: true,
-    paused_time: 0,
-    currentTime: 0,
-};
-
 // pause || resume timer when clicked on timer_container
 // this function needs to be refactored
 timer_container.addEventListener('click', () => {
@@ -41,7 +33,6 @@ timer_container.addEventListener('click', () => {
             timerObj.is_running = false;
             timerObj.is_stopped = false;
             timerObj.is_reset = false;
-            timer_container.classList.add('card-timer-time-paused');
             timerObj.paused_time = timerObj.currentTime;
         } 
     }
@@ -50,13 +41,13 @@ timer_container.addEventListener('click', () => {
         timerObj.is_running = true;
         timerObj.is_stopped = false;
         timerObj.is_reset = false;
-        timer_container.classList.remove('card-timer-time-paused');
         timerAction((timerObj.paused_time/60));
     }
 });
 // kick start timer on document load action
 document.addEventListener('DOMContentLoaded', () => {
     timerAction(timerObj.time);
+    set_settings_values();
 });
 
 
@@ -65,57 +56,89 @@ document.addEventListener('DOMContentLoaded', () => {
 function timerAction(currentTime) {
 
     let total_seconds = currentTime * 60;
-    console.log(total_seconds);
-
     //update timer value every second
-    var liveTimer = setInterval(() => {
-        total_seconds--;
-        minutes = Math.floor(total_seconds / 60);
-        seconds = total_seconds % 60;
-        if (seconds < 10 && seconds >= 0) {
-            seconds = '0' + seconds;
-        }
+    const liveTimer = setInterval(() => {
+        
+        
+        //reduce the total seconds by 1
+        total_seconds -= 1;
 
-        timer_status.innerHTML = timerObj.is_paused ? 'PAUSED' : 'RUNNING'; // update timer status; 
-        //pause if object timer is paused
+        //update the timer value
+        update_timer_value(total_seconds);
+
+        //update thet timer status
+        timer_status.innerHTML = 'RUNNING'; // update timer status; 
+
+        //handle timer pause
         if (timerObj.is_paused) {
             clearInterval(liveTimer);
             timer_value.innerHTML = `${minutes}:${seconds}`;
             timer_progress.style.strokeDashoffset = `${timerObj.currentPosition}`;
-            return;
+            timerObj.is_paused =  true;
+            timerObj.is_running = false;
+            timer_status.innerHTML = 'PAUSED';
         }
-        // if(total_seconds === 0 || timerObj.is_paused) {
 
-        //     console.log('timer paused', timerObj.paused_time);
-        //     timerObj.is_running = false;
-        //     timerObj.is_stopped = true;
-        //     timerObj.is_reset = false;
-        //     if (total_seconds === 0) {
-        //         timerObj.is_paused = false;
-        //         timerObj.is_running = false;
-        //         timerObj.is_stopped = true;
-        //         timerObj.is_reset = false;
-        //         clearInterval(liveTimer);
-        //     }
-        //     clearInterval(liveTimer);
-        // }
-        
-        //update timer value
-        timer_value.textContent = `${minutes}:${seconds}`;
+        //handle timer stop
+        if (total_seconds === 0) {
+            timerObj.is_running = false;
+            timerObj.is_stopped = true;
+            timerObj.is_reset = false;
+            clearInterval(liveTimer);
+            //change the timer status
+            timer_status.innerHTML = 'STOPPED';
+        }
 
-        //update timer progress bar
-        let radius = timer_progress.getAttribute('r');
-        let circumference = 2 * Math.PI * radius;
-        let progress = circumference * (total_seconds / (timerObj.time * 60));
-        timer_progress.style.strokeDasharray = `${progress} ${circumference}`;
+        //update the progress bar
+        update_progress_bar(total_seconds);
 
-        //update current time
+        //update current time of timerObj
         timerObj.currentTime = total_seconds;
+
+        //handle timerObj reset
+        if (timerObj.is_reset) {
+            timerObj.is_reset = false;
+            timerObj.is_running = true;
+            timerObj.is_stopped = false;
+            timerObj.is_paused = false;
+            clearInterval(liveTimer);
+            timerAction(timerObj.time);
+        }
 
     }, 1000);
 
-    return liveTimer;
 }
+
+//update minute and seconds on display
+const update_timer_value = (total_seconds) => {
+    let minutes = Math.floor(total_seconds / 60);
+    let seconds = total_seconds % 60;
+
+    if (seconds < 10 && seconds >= 0) {
+        seconds = '0' + seconds;
+    }
+    timer_value.innerHTML = `${minutes}:${seconds}`;
+};
+//update the progress bar on timer change
+const update_progress_bar = (total_seconds) => {
+            //update timer progress bar
+            let radius = timer_progress.getAttribute('r');
+            let circumference = 2 * Math.PI * radius;
+            let progress = circumference * (total_seconds / (timerObj.time * 60));
+            timer_progress.style.strokeDasharray = `${progress} ${circumference}`;
+}
+
+//initialize timer object
+var timerObj = {
+    shortBreak: 25,
+    longBreak: 5,
+    time: 1,
+    is_paused: false,
+    is_running: true,
+    is_stopped: true,
+    paused_time: 0,
+    currentTime: 0,
+};
 
 //define max and min values for timer
 const max_min_values = {
@@ -163,4 +186,28 @@ const timer_value_change = (e) => {
 const spinners = document.querySelectorAll('.spin');
 spinners.forEach(spinner => {
     spinner.addEventListener('click', timer_value_change);
+});
+
+
+//set settings values on load using timerObj
+const set_settings_values = () => {
+    short_break_value.value = timerObj.shortBreak;
+    long_break_value.value = timerObj.longBreak;
+    pomodoro_value.value = timerObj.time;
+}
+
+//handle settings apply button
+settings_apply_button.addEventListener('click', () => {
+    // reinitialize timer object
+    timerObj = {
+        'shortBreak': short_break_value.value,
+        'longBreak': long_break_value.value,
+        'time': pomodoro_value.value,'currentTime': 0,
+        'is_paused': false,'is_running': true,
+        'is_stopped': true,'paused_time': 0,
+        'is_reset': true,
+    };
+    //hide settings card
+    settings_card.classList.add('hide');
+    //update timer value
 });
