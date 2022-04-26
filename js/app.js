@@ -72,7 +72,7 @@ function timerAction(currentTime) {
         //handle timer pause
         if (timerObj.is_paused) {
             clearInterval(liveTimer);
-            timer_value.innerHTML = `${minutes}:${seconds}`;
+            // timer_value.innerHTML = `${minutes}:${seconds}`;
             timer_progress.style.strokeDashoffset = `${timerObj.currentPosition}`;
             timerObj.is_paused =  true;
             timerObj.is_running = false;
@@ -104,7 +104,16 @@ function timerAction(currentTime) {
             clearInterval(liveTimer);
             timerAction(timerObj.time);
         }
-
+        //handle timer mode change
+        if (timerObj.is_mode_changed) {
+            timerObj.is_mode_changed = false;
+            timerObj.is_running = true;
+            timerObj.is_stopped = false;
+            timerObj.is_paused = false;
+            clearInterval(liveTimer);
+            timerAction(timerObj.time);
+        }
+       
     }, 1000);
 
 }
@@ -130,15 +139,25 @@ const update_progress_bar = (total_seconds) => {
 
 //initialize timer object
 var timerObj = {
-    shortBreak: 25,
-    longBreak: 5,
-    time: 1,
+    shortBreak: 5,
+    longBreak: 15,
+    pomodoro: 25,
+    time: 25,
     is_paused: false,
     is_running: true,
     is_stopped: true,
     paused_time: 0,
     currentTime: 0,
+    currentMode: 'pomodoro',
+    is_mode_changed: false,
 };
+
+//initialize ui object
+var uiObj = {
+    fontFamily: " 'Syncopate', sans-serif",
+    highLightColor: '#F87070',
+};
+
 
 //define max and min values for timer
 const max_min_values = {
@@ -200,14 +219,111 @@ const set_settings_values = () => {
 settings_apply_button.addEventListener('click', () => {
     // reinitialize timer object
     timerObj = {
-        'shortBreak': short_break_value.value,
-        'longBreak': long_break_value.value,
-        'time': pomodoro_value.value,'currentTime': 0,
+        'shortBreak': parseInt(short_break_value.value),
+        'longBreak': parseInt(long_break_value.value),
+        'pomodoro': parseInt(pomodoro_value.value),
+        'time': parseInt(pomodoro_value.value),'currentTime': 0,
         'is_paused': false,'is_running': true,
         'is_stopped': true,'paused_time': 0,
         'is_reset': true,
     };
+
+    //update ui changes
+    update_ui_changes();
+
     //hide settings card
     settings_card.classList.add('hide');
     //update timer value
+});
+
+const update_ui_changes = () => {
+    //apply font changes
+    let root = document.documentElement;
+    root.style.setProperty('--highlight', uiObj.highLightColor);
+    document.body.style.fontFamily = uiObj.fontFamily;
+    //apply color changes
+    console.log(document.body.style.fontFamily);
+}
+
+//handle card navigation pomodoro -> short break -> long break 
+const card_navigation = (e) => {
+    //ensure always the target element is the div with .card-nav-item class
+    let clickedElement = e.target.tagName === 'A' ? e.target.parentElement : e.target;
+    //get id of the clicked element
+    let id = clickedElement.getAttribute('id');
+    //activate timer mode 
+    console.log(id)
+    timer_mode_change(id);
+    //add active class to the clicked element
+    clickedElement.classList.add('active');
+    //remove active class from all other elements
+    card_navigation_buttons.forEach(item => {
+        if (item.getAttribute('id') !== id) {
+            item.classList.remove('active');
+        }
+    });
+ 
+}
+
+//handle card navigation buttons
+const card_navigation_buttons = document.querySelectorAll('.card-nav-item');
+card_navigation_buttons.forEach(button => {
+    button.addEventListener('click', card_navigation);
+});
+
+//handle activation of different modes of timer i.e. pomodoro, short break, long break
+const timer_mode_change = (timer_mode) => {
+    console.log(timer_mode,'timer_mode');
+    //set timer mode
+    timerObj.currentMode = timer_mode;
+    //update timer value
+    timerObj.time = timerObj[timer_mode];
+    //update timer mode status
+    timerObj.is_mode_changed = true;
+
+}
+
+
+//handle font type switch
+const font_settings = document.querySelectorAll('ul.font-settings li');
+font_settings.forEach(item => {
+
+    item.addEventListener('click', (e) => {
+        //get font type
+        let target_element = e.target.tagName === 'SPAN' ? e.target.parentElement : e.target;
+        let font_type = target_element.getAttribute('data-font-type');
+        uiObj.fontFamily = font_type;
+        //add active class to the clicked element
+        target_element.classList.add('active');
+        //remove active class from all other elements
+        font_settings.forEach(item => {
+            if (item.getAttribute('data-font-type') !== font_type) {
+                item.classList.remove('active');
+            }
+        });
+   
+    });
+        
+});
+
+const color_settings = document.querySelectorAll('ul.color-settings li');
+color_settings.forEach(item => {
+
+    item.addEventListener('click', (e) => {
+        //get font type
+        let target_element = e.target.tagName === 'SPAN' ? e.target.parentElement : e.target;
+        let color_type = target_element.getAttribute('data-color');
+        uiObj.highLightColor = `var(${color_type})`;
+        console.log(color_type);
+        //remove hide from i element to show the color
+        target_element.children[0].classList.remove('hide');
+        //add hide to all other i elements
+        color_settings.forEach(item => {
+            if (item !== target_element) {
+                item.children[0].classList.add('hide');
+            }
+        });
+   
+    });
+        
 });

@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100;400;700&family=Roboto+Slab:wght@200;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"> 
  <link rel="stylesheet" href="./css/style.css"> 
   <title>My Pomodoro app</title>
 </head>
@@ -16,17 +19,17 @@
     </div>
 <!--  navigation -->
     <div class="card-nav">
-      <div class="card-nav-item active">
+      <div class="card-nav-item active" id="pomodoro">
         <a href="#">
           pomodoro
         </a>
       </div>
-      <div class="card-nav-item">
+      <div class="card-nav-item" id="shortBreak">
         <a href="#">
           short break
         </a>
       </div>
-      <div class="card-nav-item">
+      <div class="card-nav-item" id="longBreak">
         <a href="#">
           long break
         </a>
@@ -135,33 +138,37 @@
       <!-- font related settings -->
       <div class="settings-items-content-fonts">
           <span>Font</span>
-          <ul class="font-settings">
-            <li class="active">
-              <span class="fontA">Aa</span>
+          <ul class="font-settings" >
+            <li class="active" data-font-type=" 'Syncopate', sans-serif ">
+              <span class="syncopate">Aa</span>
             </li>
-            <li>
-              <span class="fontB">Aa</span>
+            <li data-font-type=" 'Roboto', sans-serif " >
+              <span class="roboto">Aa</span>
             </li>
-            <li>
-              <span class="fontC">Aa</span>
+            <li data-font-type=" 'Space Mono', sans-serif ">
+              <span class="space-mono">Aa</span>
             </li>
           </ul>
 
       </div>  
        <div class="settings-items-content-colors">
           <span>Color</span>
-          <ul>
-            <li>
-              <span class="blue"></span>
+          <ul class="color-settings">
+            <li data-color="--begonia">
+              <i class="fas fa-check"></i>
+              <span></span>
             </li>
-            <li>
-                <span class="red"></span>
+            <li data-color="--electric-blue">
+              <i class="fas fa-check hide"></i>
+                <span></span>
             </li>
-          <li>
-              <span class="yellow"></span>
+            <li data-color="--heliotrope">
+              <!-- put fontawesom item check symbol -->
+              <i class="fas fa-check hide"></i>
+              <span></span>
             </li>
           </li>
-          </ul> 
+        </ul>
         </div>
         <div class="apply-settings-button-container">
           <button>Apply</button>

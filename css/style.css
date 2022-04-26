@@ -8,10 +8,13 @@ Define color variables
     --red: #e53935;
     --title-white: #D7E0FF;
     --bg-color: #1E213F;
-    --highlight-pink: #F87070;
+    --highlight: #F87070;
     --bg-color-dark: #161932;
     --regular-white: #fff;
     --border-bottom-white: #e0e0e0;
+    --electric-blue: #70F3F8;
+    --heliotrope: #D881F8;
+    --begonia: #F87070;
 }
 
 
@@ -20,8 +23,7 @@ hr{
     opacity: .3;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200&family=Space+Mono&family=Syncopate:wght@700&display=swap');
 /* 
 The great reset :)
 */
@@ -31,6 +33,10 @@ The great reset :)
     margin: 0;
     padding: 0;
     text-decoration: none;
+}
+
+body{
+    font-family: 'Syncopate', sans-serif;
 }
 
 a{
@@ -102,15 +108,16 @@ Style the navigation
     border-radius: 2rem;
     padding: .5rem;
     align-items: center;
-    width: 80%;
+    width: 100%;
+    min-width: 50%;
 }
 
 .card-nav-item.active{
-    background: var(--highlight-pink);
+    background: var(--highlight);
 }
 .card-nav-item.active a{
     color: var(--bg-color-dark);
-    font-weight: 500;
+    font-weight: 100;
 }
 .card-nav-item{
     width: 100%;
@@ -121,12 +128,14 @@ Style the navigation
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
 }
 .card-nav-item a{
     color: var(--title-white);
-    font-family: 'Syncopate', sans-serif;
+    /* font-family: 'Syncopate', sans-serif; */
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 100;
 }
 .card-timer-progress{
     position: relative;
@@ -143,7 +152,7 @@ Style the navigation
     align-items: center;
     gap: 1rem;
     color: var(--title-white);
-    font-family: 'Syncopate', sans-serif;
+    /* font-family: 'Syncopate', sans-serif; */
 }
 .card-timer-time .card-timer-time-value{
     font-size: 4rem;
@@ -193,7 +202,7 @@ style the svg circles
     stroke: var(--bg-color-dark);
 }
 .radial-progress-bar2{
-    stroke: var(--highlight-pink);
+    stroke: var(--highlight);
 }
 
 .radial-progress-bar3{
@@ -214,7 +223,7 @@ style settings
     background: var(--regular-white);
     border-radius: 10px;
     height: 50%;
-    font-family: 'Syncopate', sans-serif;
+    /* font-family: 'Syncopate', sans-serif; */
 }
 .settings-card .close-button{
     cursor: pointer;
@@ -289,7 +298,7 @@ padding: 2rem;
 }
 
 .spin span:active{
-    color: var(--highlight-pink);
+    color: var(--highlight);
     opacity: 1;
 }
 
@@ -340,7 +349,15 @@ sytle the font settings
 .settings-items-content-fonts ul li.active span{
     color: var(--regular-white);
 }
-
+.settings-items-content-fonts ul li span.roboto{
+    font-family: 'Roboto', sans-serif;
+}
+.settings-items-content-fonts ul li span.syncopate{
+    font-family: 'Syncopate', sans-serif;
+}
+.settings-items-content-fonts ul li span.space-mono{
+    font-family: 'Space Mono', sans-serif;
+}
 /*
 style the color settings
 */
@@ -349,13 +366,13 @@ style the color settings
     border-bottom: none;
 }
 .settings-items-content-colors ul li:nth-child(1){
-    background: var(--highlight-pink);
+    background: var(--begonia);
 }
 .settings-items-content-colors ul li:nth-child(2){
-    background: var(--bg-color-dark);
+    background: var(--electric-blue);
 }
 .settings-items-content-colors ul li:nth-child(3){
-    background: var(--darkblue);
+    background: var(--heliotrope);
 }
 
 /*
@@ -367,7 +384,7 @@ style apply settings button
     margin-top: -1rem;
 }
 .apply-settings-button-container button{
-    background: var(--highlight-pink);
+    background: var(--highlight);
     color: var(--regular-white);
     border: none;
     padding: .6rem 1.5rem;
