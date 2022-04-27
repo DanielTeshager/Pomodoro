@@ -24,9 +24,9 @@ open_settings_button.addEventListener('click', (e) => {
 });
 
 
-// pause || resume timer when clicked on timer_container
+// pause || resume timer when clicked on timer_value
 // this function needs to be refactored
-timer_container.addEventListener('click', () => {
+timer_value.addEventListener('click', () => {
     if (timerObj.is_running) {
         timerObj.is_paused = !timerObj.is_paused;
         if (timerObj.is_paused) {
